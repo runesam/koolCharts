@@ -1,7 +1,7 @@
 angular.module('koolChartsI').service('chartsService', chartsServiceFn);
 
 function chartsServiceFn($window) {
-    this.getLayOutStr = function (options) {
+    this.getRealTimeLayOutStr = function (options) {
         return '<KoolChart backgroundColor="#FFFFFF"  borderStyle="none">'
             + (options ? this.getOptionsLayOut(options) : '')
             + '<DateFormatter id="dateFmt" formatString="HH:NN:SS"/>'
@@ -47,6 +47,45 @@ function chartsServiceFn($window) {
             + '<HttpServiceRepeater url="https://www.koolchart.com/realtimeSample/process2Data.php" target="{chart}" interval="2" method="get"/>'
             + '</KoolChart>';
     };
+    this.getAreaLayOutStr = function () {
+        return '<KoolChart backgroundColor="#FFFFFF"  borderStyle="none">'
+            + '<Options>'
+            + '<Caption text="Global Sales"/>'
+            + '<SubCaption text="( billion $ )" textAlign="right" />'
+            + '<Legend defaultMouseOverAction="false"/>'
+            + '</Options>'
+            + '<Area2DChart showDataTips="true" dataTipDisplayMode="axis">'
+            + '<horizontalAxis>'
+            + '<CategoryAxis categoryField="Month" padding="0.5"/>'
+            + '</horizontalAxis>'
+            + '<verticalAxis>'
+            + '<LinearAxis />'
+            + '</verticalAxis>'
+            + '<series>'
+            + '<Area2DSeries yField="goods" form="curve" displayName="goods">'
+            + '<showDataEffect>'
+            + '<SeriesInterpolate/>'
+            + '</showDataEffect>'
+            + '</Area2DSeries>'
+            + '<Area2DSeries yField="income" form="curve" displayName="income">'
+            + '<showDataEffect>'
+            + '<SeriesInterpolate/>'
+            + '</showDataEffect>'
+            + '</Area2DSeries>'
+            + '<Area2DSeries yField="service" form="curve" displayName="service">'
+            + '<showDataEffect>'
+            + '<SeriesInterpolate/>'
+            + '</showDataEffect>'
+            + '</Area2DSeries>'
+            + '<Area2DSeries yField="test" form="curve" displayName="test">'
+            + '<showDataEffect>'
+            + '<SeriesInterpolate/>'
+            + '</showDataEffect>'
+            + '</Area2DSeries>'
+            + '</series>'
+            + '</Area2DChart>'
+            + '</KoolChart>';
+    }
     this.getOptionsLayOut = function (data) {
         if (data.captions) {
             var captions = data.captions.map(function (caption) {
@@ -62,6 +101,7 @@ function chartsServiceFn($window) {
                 return '<Caption ' + textsToMerge.join(' ') + '/>';
             });
         }
+
         if (data.subCaptions) {
             var subCaptions = data.subCaptions.map(function (subCaption) {
                 var textsToMerge = [];
@@ -77,7 +117,17 @@ function chartsServiceFn($window) {
             });
         }
         return '<Options>' + (captions ? captions.join('') : '') + (subCaptions ? subCaptions.join('') : '') + '</Options>';
-    }
+    };
+    this.areaChartData =
+        [{ "Month": "Mar", "service": 3, "goods": 25, "income": 20, "test": 5 },
+        { "Month": "Apr", "service": 15, "goods": 42, "income": 20, "test": 20 },
+        { "Month": "May", "service": 5, "goods": 55, "income": 25, "test": 60 },
+        { "Month": "Jun", "service": 15, "goods": 42, "income": 42, "test": 7 },
+        { "Month": "Jul", "service": 5, "goods": 32, "income": 45, "test": 42 },
+        { "Month": "Aug", "service": 15, "goods": 40, "income": 58, "test": 25 },
+        { "Month": "Sep", "service": 5, "goods": 27, "income": 37, "test": 19 },
+        { "Month": "Oct", "service": 17, "goods": 17, "income": 25, "test": 54 },
+        { "Month": "Nov", "service": 35, "goods": 13, "income": 20, "test": 35 }];
     $window.userFunction = function (id, index, data, values) {
         var className = "high",
             value = values[1];
@@ -100,5 +150,5 @@ function chartsServiceFn($window) {
             };
         }
         return;
-    }
+    };
 }

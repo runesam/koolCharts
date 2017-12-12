@@ -1,7 +1,7 @@
 (function () {
     'use strict';
-    angular.module('koolChartsI').directive('realTimeChart', realTimeChartFn);
-    function realTimeChartFn() {
+    angular.module('koolChartsI').directive('areaChart', areaChartFn);
+    function areaChartFn() {
         return {
             restrict: 'EA',
             scope: {
@@ -10,8 +10,8 @@
             bindToController: true,
             controller: ControllerFn,
             link: LinkFn,
-            controllerAs: 'vmRealTimeChart',
-            templateUrl: 'app/realTime/components/realTimeChart.html'
+            controllerAs: 'vmAreaChart',
+            templateUrl: 'app/area/components/areaChart.html'
         }
     }
     ControllerFn.$inject = ['chartsService', '$window', '$document'];
@@ -25,12 +25,13 @@
             height: '100%'
         }
 
-        vm.layoutStr = chartsService.getRealTimeLayOutStr(vm.options);
+        vm.layoutStr = chartsService.getAreaLayOutStr(vm.options);
+        vm.chartData = chartsService.areaChartData;
 
         $window.chartReadyHandler = function (id) {
             $document[0].getElementById(id).setLayout(vm.layoutStr);
+            $document[0].getElementById(id).setData(vm.chartData);
         }
-
         $window.KoolChartStart(vm.config);
     }
     function LinkFn (scope, element) {

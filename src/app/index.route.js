@@ -19,6 +19,12 @@
         templateUrl: 'app/realTime/realTime.html',
         controller: 'RealTimeController',
         controllerAs: 'vmRealTime'
+      })
+      .state('area', {
+        url: '/area',
+        templateUrl: 'app/area/area.html',
+        controller: 'AreaController',
+        controllerAs: 'vmArea'
       });
 
     $urlRouterProvider.otherwise('/');
