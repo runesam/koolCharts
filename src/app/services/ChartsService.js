@@ -1,10 +1,10 @@
 angular.module('koolChartsI').service('chartsService', chartsServiceFn);
 
 function chartsServiceFn($window) {
-    this.getRealTimeLayOutStr = function (options) {
-        return '<KoolChart backgroundColor="#FFFFFF"  borderStyle="none">'
+    this.getRealTimeLayOutStr = function (options, dateFormat) {
+        return '<KoolChart backgroundColor="#FFFFFF" borderStyle="none">'
             + (options ? this.getOptionsLayOut(options) : '')
-            + '<DateFormatter id="dateFmt" formatString="HH:NN:SS"/>'
+            + (dateFormat ? '<DateFormatter id="dateFmt" formatString="' + dateFormat + '"/>' : '')
             + '<NumberFormatter id="numFmt"/>'
             + '<RealTimeChart id="chart" dataDisplayType="time" timePeriod="300" interval="3" showDataTips="true">'
             + '<horizontalAxis>'
